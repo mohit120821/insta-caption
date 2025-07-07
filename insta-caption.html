@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+ 
+
+
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocean-Deep Insta Caption Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #e0f2f7; /* Soft ocean blue */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 45px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 800px;
+            box-sizing: border-box;
+            border: 1px solid #c2e0f0;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #00796b; /* Deep teal */
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin-bottom: 35px;
+            padding: 30px;
+            background-color: #f0f8fb; /* Lighter ocean tint */
+            border-radius: 15px;
+            border: 1px solid #b3e5fc;
+        }
+        .section h2 {
+            color: #00796b;
+            margin-top: 0;
+            font-size: 1.9em;
+            border-bottom: 2px solid #81d4fa;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #444;
+            font-size: 1.1em;
+        }
+        input[type="text"], textarea, select {
+            width: calc(100% - 28px);
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #81d4fa;
+            border-radius: 10px;
+            font-size: 1.05em;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #00bcd4; /* Brighter blue */
+            box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.25);
+            outline: none;
+        }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 22px 28px;
+            background-image: linear-gradient(to right, #00acc1, #00bcd4); /* Vibrant blue gradient */
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 172, 193, 0.4);
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-image: linear-gradient(to right, #0097a7, #00aec2);
+            transform: translateY(-5px);
+            box-shadow: 0 9px 25px rgba(0, 172, 193, 0.6);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(0, 172, 193, 0.25);
+        }
+        .caption-output {
+            margin-top: 45px;
+            padding: 40px;
+            background-color: #e0f7fa; /* Even lighter blue */
+            border-radius: 18px;
+            border: 2px dashed #0097a7; /* Teal dashed border */
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 1.1em;
+            color: #444;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.08);
+        }
+        .caption-output strong {
+            color: #00796b;
+            font-weight: 700;
+        }
+        .caption-output .emoji-line {
+            margin-top: 25px;
+            font-size: 2em;
+            text-align: center;
+            width: 100%;
+            color: #00796b;
+            letter-spacing: 6px;
+        }
+        .caption-output .hashtags {
+            margin-top: 25px;
+            color: #004d40; /* Dark green-teal for hashtags */
+            font-size: 0.9em;
+            line-height: 1.6;
+            word-break: break-all;
+            opacity: 0.9;
+        }
+        .footer {
+            margin-top: 45px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <script>
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.onkeydown = function(e) {
+  if (e.keyCode == 123 || 
+     (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) ||
+     (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) ||
+     (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+      return false;
+  }
+}
+</script>
+
+    <div class="container">
+        <h1>🌊 Ocean-Deep Insta Caption Generator ⚓</h1>
+        <h2>You may close the popunder navigating ads</h2>
+<a href="ai-tools.html">BACK</a>
+        <div class="section">
+            <h2>1. Post Essentials</h2>
+            <label for="imageSubject">What's the core focus of your content?</label>
+            <input type="text" id="imageSubject" placeholder="e.g., golden sunset, new cafe, coding tutorial, sustainable fashion">
+
+            <label for="keywords">Add specific elements or unique angles (comma-separated):</label>
+            <input type="text" id="keywords" placeholder="e.g., peaceful, challenging, DIY, future trends, community">
+        </div>
+
+        <div class="section">
+            <h2>2. Emotion & Purpose</h2>
+            <label for="mood">What overriding emotion or feeling do you want to evoke?</label>
+            <select id="mood">
+                <option value="happy">Joyful & Positive</option>
+                <option value="inspirational">Inspiring & Thought-Provoking</option>
+                <option value="funny">Humorous & Witty</option>
+                <option value="informative">Educational & Insightful</option>
+                <option value="aesthetic">Visually Pleasing & Calm</option>
+                <option value="exciting">Exciting & Adventurous</option>
+                <option value="grateful">Thankful & Appreciative</option>
+                <option value="relatable">Relatable & Empathetic</option>
+                <option value="aspirational">Aspirational & Ambitious</option>
+            </select>
+
+            <label for="callToAction">What's the main action you want your audience to take?</label>
+            <select id="callToAction">
+                <option value="engage_comment">Spark conversation in comments</option>
+                <option value="educate_learn">Encourage learning/share tips</option>
+                <option value="drive_traffic">Direct to link/website</option>
+                <option value="inspire_action">Motivate to try/do something</option>
+                <option value="entertain_share">Simply entertain/encourage sharing</option>
+                <option value="build_community">Foster connection/community</option>
+                <option value="none">No specific CTA</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <h2>3. Audience & Style</h2>
+            <label for="audience">Who are you speaking to?</label>
+            <select id="audience">
+                <option value="general">Broad Public</option>
+                <option value="niche">Specific Niche Enthusiasts</option>
+                <option value="friends">Close Friends & Family</option>
+                <option value="customers">Potential Customers/Clients</option>
+                <option value="professional">Industry Professionals</option>
+            </select>
+
+            <label for="length">Desired Caption Length:</label>
+            <select id="length">
+                <option value="short">Concise (1-2 lines)</option>
+                <option value="medium">Standard (2-4 lines)</option>
+                <option value="long">Detailed (4+ lines, storytelling)</option>
+            </select>
+        </div>
+
+        <button onclick="generateCaption()">Dive In! Generate Caption!</button>
+
+        <div class="caption-output" id="captionOutput">
+            <p>Ready to explore the depths of your caption potential? Fill in the details and generate your perfect post!</p>
+        </div>
+       
+<br>
+
+
+       
+
+
+       <div id="container-8831a40d66cad42fa70bb82be1c7fc20"></div>
+        <div class="footer">
+            <p>&copy; 2025 RushDrip. Explore endless possibilities.</p>
+        </div>
+    </div>
+
+    <script>
+  
+
+
+        // --- Core Lexical Components (MASSIVELY EXPANDED) ---
+        const openingHooks = [
+            "Lost in the [MOOD_ADJECTIVE] [SUBJECT_NOUN] of it all.",
+            "Embracing the magic of [SUBJECT_PHRASE].",
+            "This [ADJECTIVE] [NOUN] just changed my perspective.",
+            "Couldn't resist sharing the [ADJECTIVE] beauty of [SUBJECT_PHRASE].",
+            "Dive into the [ADJECTIVE] depths of [SUBJECT_PHRASE].",
+            "Feeling utterly [MOOD_ADJECTIVE] about [SUBJECT_PHRASE] today.",
+            "A little slice of [CONCEPT] manifested right here.",
+            "When [SUBJECT_PHRASE] truly captivates.",
+            "Here’s to more moments like this.",
+            "Unveiling the [ADJECTIVE] truth about [SUBJECT_PHRASE].",
+            "POV: You're experiencing peak [MOOD_ADJECTIVE] [SUBJECT_NOUN].",
+            "Let's talk about the incredible [SUBJECT_NOUN] that is [SUBJECT_PHRASE].",
+            "Breaking through the noise with [SUBJECT_PHRASE].",
+            "If this isn't [MOOD_ADJECTIVE], I don't know what is.",
+            "Woke up and chose [MOOD_ADJECTIVE] [SUBJECT_NOUN]."
+        ];
+
+        const transitionalPhrases = [
+            "It's moments like these that truly inspire.",
+            "This experience reminded me of the power of [CONCEPT].",
+            "In a world buzzing with activity, finding [CONCEPT] is key.",
+            "It's a journey, not a destination.",
+            "Every detail tells a story.",
+            "Making memories one [SUBJECT_NOUN] at a time.",
+            "Forever chasing that [MOOD_ADJECTIVE] feeling.",
+            "And I couldn't be happier about it.",
+            "This perspective shift is everything.",
+            "It’s more than just a [SUBJECT_NOUN], it’s a [CONCEPT]."
+        ];
+
+        const reinforcingStatements = {
+            happy: [
+                "Pure joy in every pixel. Feeling so blessed!",
+                "Smiling from ear to ear, soaking in these amazing vibes.",
+                "Happiness is contagious, especially with [SUBJECT_PHRASE] around.",
+                "Cherishing these beautiful, [ADJECTIVE] moments forever.",
+                "Life's simple pleasures, truly celebrated.",
+                "Good vibes are flowing, and my heart is full."
+            ],
+            inspirational: [
+                "Dream big, act bigger. This is proof of what's possible.",
+                "Let this ignite your passion for [SUBJECT_PHRASE].",
+                "Growth happens outside your comfort zone. Embrace the journey.",
+                "Believe in your infinite potential. You're capable of anything.",
+                "Your path is unique; make every step count.",
+                "Finding purpose in the everyday, one [SUBJECT_NOUN] at a time."
+            ],
+            funny: [
+                "My current relationship status: madly in love with [SUBJECT_PHRASE] (and maybe a little chaotic).",
+                "Pretty sure I peaked here. Send help (and snacks).",
+                "If only adulting came with a [SUBJECT_NOUN] instruction manual.",
+                "When life gives you [SUBJECT_PHRASE], make sure to capture it for the 'gram.",
+                "This is my spirit animal, but make it [SUBJECT_PHRASE]."
+            ],
+            informative: [
+                "Here's the lowdown on [SUBJECT_PHRASE] you didn't know you needed.",
+                "Breaking down the complexities of [SUBJECT_PHRASE] into simple steps.",
+                "Unlock your potential by understanding these key [SUBJECT_NOUN] insights.",
+                "This fact about [SUBJECT_PHRASE] will blow your mind. 🤯",
+                "Equipping you with the knowledge to conquer your [SUBJECT_NOUN] goals.",
+                "The more you know about [SUBJECT_PHRASE], the better!"
+            ],
+            aesthetic: [
+                "Simply breathtaking. The [ADJECTIVE] artistry of life.",
+                "Lost in the visual symphony of [SUBJECT_PHRASE].",
+                "Curating moments of beauty, one [SUBJECT_NOUN] at a time.",
+                "Where serenity meets stunning visuals. Absolute bliss.",
+                "Every corner, a canvas. Every [SUBJECT_NOUN], a masterpiece."
+            ],
+            exciting: [
+                "Adrenaline pumping, heart racing! What an incredible [SUBJECT_PHRASE] adventure!",
+                "Pushing limits and experiencing the thrill of [SUBJECT_PHRASE].",
+                "Pure exhilaration. This is what [CONCEPT] feels like!",
+                "Unforgettable moments carved out by pure energy and passion.",
+                "Ready for the next [SUBJECT_NOUN] challenge! Who's with me?"
+            ],
+            grateful: [
+                "Overflowing with gratitude for this [ADJECTIVE] [SUBJECT_PHRASE].",
+                "Every blessing counted, every moment cherished.",
+                "My heart is full. Thankful for [SUBJECT_PHRASE] and so much more.",
+                "The simple act of appreciating makes life richer.",
+                "Blessed to be living this [ADJECTIVE] [SUBJECT_NOUN] journey."
+            ],
+            relatable: [
+                "Anyone else feel this way about [SUBJECT_PHRASE]?",
+                "The real struggle (and joy) of [SUBJECT_PHRASE].",
+                "It's just one of those [MOOD_ADJECTIVE] [SUBJECT_NOUN] moments, isn't it?",
+                "Yup, this pretty much sums up my life with [SUBJECT_PHRASE].",
+                "We've all been there with [SUBJECT_PHRASE], right? 😂"
+            ],
+            aspirational: [
+                "Chasing greatness, one [SUBJECT_NOUN] at a time.",
+                "Manifesting dreams and building an empire with [SUBJECT_PHRASE].",
+                "The future is bright, especially with [SUBJECT_PHRASE] as my guide.",
+                "Setting new standards and aiming higher, always.",
+                "Becoming the best version of myself, inspired by [SUBJECT_PHRASE]."
+            ]
+        };
+
+        const moodAdjectives = {
+            happy: ["joyful", "radiant", "blissful", "uplifting", "sunny", "vibrant", "euphoric", "glorious", "sparkling", "cheerful"],
+            inspirational: ["motivating", "empowering", "transformative", "insightful", "inspiring", "growth-filled", "visionary", "awakening", "profound", "enlightening"],
+            funny: ["hilarious", "quirky", "witty", "amusing", "unexpected", "relatable", "playful", "silly", "charming", "ironic"],
+            informative: ["insightful", "educational", "clarifying", "detailed", "valuable", "eye-opening", "comprehensive", "analytical", "revealing", "expert"],
+            aesthetic: ["serene", "captivating", "minimalist", "charming", "picturesque", "harmonious", "stunning", "exquisite", "elegant", "dreamy"],
+            exciting: ["thrilling", "dynamic", "adventurous", "energetic", "unforgettable", "breathtaking", "electrifying", "wild", "daring", "pulsating"],
+            grateful: ["thankful", "blessed", "appreciative", "humbling", "heartfelt", "fortunate", "cherished", "content", "gracious", "overwhelmed (with joy)"],
+            relatable: ["universal", "familiar", "shared", "common", "authentic", "genuine", "down-to-earth", "honest", "true"],
+            aspirational: ["ambitious", "visionary", "forward-thinking", "innovative", "driven", "determined", "boundless", "evolving", "pioneering"]
+        };
+
+        const concepts = {
+            general: ["joy", "positivity", "growth", "adventure", "beauty", "connection", "inspiration", "creativity", "knowledge", "transformation", "serenity", "progress", "freedom", "passion"],
+            happy: ["happiness", "bliss", "radiance", "cheer", "optimism"],
+            inspirational: ["purpose", "potential", "resilience", "wisdom", "breakthrough"],
+            funny: ["laughter", "humor", "wit", "absurdity", "lightness"],
+            informative: ["clarity", "understanding", "mastery", "expertise", "efficiency"],
+            aesthetic: ["artistry", "elegance", "harmony", "vision", "calm"],
+            exciting: ["thrill", "adrenaline", "discovery", "momentum", "conquest"],
+            grateful: ["gratitude", "appreciation", "blessings", "thankfulness", "kindness"],
+            relatable: ["empathy", "shared experience", "authenticity", "connection", "truth"],
+            aspirational: ["ambition", "vision", "achievement", "success", "future"]
+        };
+
+        const CTA_prompts = {
+            engage_comment: [
+                "What's your take on this? Share your thoughts below! 👇",
+                "I'd love to hear your insights. Let's chat in the comments! 💬",
+                "Drop a '❤️' if this resonated with you! 👇",
+                "What's one word that describes this for you? Tell me! 👇",
+                "Tag a friend who needs to see this! ✨",
+                "Do you agree? Disagree? Let me know your perspective! 🤔"
+            ],
+            educate_learn: [
+                "Save this for your [KEYWORD_PHRASE] journey! 📌",
+                "Learn more about [KEYWORD_PHRASE] via the link in bio! 💡",
+                "Follow for daily [KEYWORD_PHRASE] tips & tricks! 📚",
+                "What other questions do you have about [KEYWORD_PHRASE]? Ask away! 👇",
+                "Hit the notification bell to stay updated on [KEYWORD_PHRASE] insights! 🔔"
+            ],
+            drive_traffic: [
+                "Click the link in bio to explore more! 🔗",
+                "Visit my website for the full story/details! 🌐",
+                "Shop this look/product now (link in bio)! 🛒",
+                "DM me '[MAIN_KEYWORD]' for exclusive access/offers! 📥",
+                "Find out more about this at [WEBSITE_NAME/PLATFORM]! 🚀"
+            ],
+            inspire_action: [
+                "Let this spark your next [KEYWORD_PHRASE] adventure! 🚀",
+                "Keep chasing your dreams. You got this! ✨",
+                "What's one positive step you're taking today? Share it! 🙏",
+                "Find your own magic in the everyday. Go make it happen! 🌟",
+                "Don't just dream it, do it. Your journey starts now!"
+            ],
+            entertain_share: [
+                "Hope this brought a smile to your face! 😄",
+                "Relatable? 😂 Share it with someone who gets it!",
+                "Just for fun! What's your favorite part? 👇",
+                "Who else can relate to this [KEYWORD_PHRASE] moment? 🙋‍♀️",
+                "This one's for the laughs! What's your funniest [MAIN_KEYWORD] story?"
+            ],
+            build_community: [
+                "Building a community around [KEYWORD_PHRASE]. Join us! 🤝",
+                "Connect with fellow [AUDIENCE_TYPE] in the comments!",
+                "Proud to be part of the [KEYWORD_PHRASE] family. What about you?",
+                "Let's grow together! Share your experiences with [KEYWORD_PHRASE].",
+                "Tag someone who embodies the spirit of [KEYWORD_PHRASE]! ❤️"
+            ],
+            none: [""] // No CTA
+        };
+
+        const generalClosingPhrases = [
+            "Every day is a chance to create something beautiful.",
+            "Making memories, one post at a time.",
+            "Forever grateful for these moments and this journey.",
+            "Finding joy in the journey, always.",
+            "Love sharing my world and passions with you all.",
+            "Stay curious, stay inspired.",
+            "Embrace the process.",
+            "Cheers to new beginnings and endless possibilities.",
+            "Life's beautiful symphony.",
+            "Always growing, always learning."
+        ];
+
+        const moodEmojis = {
+            happy: ["😊", "☀️", "💖", "✨", "😃", "😁", "🌈", "🌻", "🥳", "🎉", " bubbly!"],
+            inspirational: ["🌟", "🚀", "💪", "💡", "✨", "🌱", "📈", "🙌", "💫", "💭", "🔥"],
+            funny: ["🤣", "😂", "🤪", "🙈", "🙃", "😅", "🤷‍♀️", "🍕", "🍔", "☕", "🤦‍♀️"],
+            informative: ["📚", "📝", "💡", "🔍", "📊", "🧠", "✅", "🎓", "🔬", "📈", "🗣️"],
+            aesthetic: ["🌸", "🌿", "✨", "🤍", "🕯️", "🍂", "☕", "📸", "🖼️", "🧘‍♀️", "💧"],
+            exciting: ["🔥", "💥", "🚀", "🎉", "⚡", "🤯", "🤩", " thrilling!", "✨", "💫", "🎯"],
+            grateful: ["🙏", "💖", "✨", "💫", "🕊️", "🌟", "💛", "😊", "🥹", "🙌", "🤍"],
+            relatable: ["🙌", "💯", "🤷‍♀️", "😂", "🫠", "🙈", "💬", "🤝", "🫂", "✨"],
+            aspirational: ["🚀", "📈", "🌟", "💡", "🎯", "🏆", "📈", "✨", "💪", "⚡"]
+        };
+
+        const nicheKeywordsToHashtags = {
+            // Expanded mappings for broader coverage
+            "sunset": ["#SunsetMagic", "#GoldenHour", "#SunsetLover", "#SkyOnFire", "#NatureAesthetics"],
+            "coffee": ["#CoffeeCulture", "#CoffeeLover", "#CafeVibes", "#MorningRitual", "#BaristaLife"],
+            "travel": ["#TravelAdventures", "#Wanderlust", "#ExploreMore", "#AdventureTime", "#TravelGram", "#BucketList", "#GlobalNomad"],
+            "product": ["#NewProductAlert", "#ProductLaunch", "#TechGadget", "#MustHave", "#Innovation", "#ShopNow"],
+            "workout": ["#FitnessMotivation", "#WorkoutLife", "#GymGoals", "#HealthyActiveLifestyle", "#FitFam", "#NoExcuses"],
+            "food": ["#FoodieLife", "#HomeCooking", "#Deliciousness", "#Foodstagram", "#RecipeInspo", "#GourmetFood", "#EatWell"],
+            "coding": ["#CodingLife", "#DeveloperMindset", "#ProgrammerLife", "#TechTips", "#WebDev", "#SoftwareEngineer", "#AICommunity"],
+            "fashion": ["#OOTDStyle", "#FashionInspo", "#PersonalStyle", "#SustainableFashion", "#StreetStyle", "#Fashionista"],
+            "mountain": ["#MountainAdventures", "#HikingTrails", "#NatureLover", "#OutdoorExploration", "#Alpine", "#PeakViews"],
+            "beach": ["#BeachDays", "#OceanVibes", "#SummerEscapes", "#CoastalLiving", "#Seaside", "#SandyToes"],
+            "book": ["#Bookish", "#ReadingCommunity", "#BookRecommendation", "#LiteraryEscape", "#BookLover"],
+            "art": ["#ArtisticExpression", "#CreativeProcess", "#ArtistLife", "#ArtDaily", "#VisualArts", "#DIYArt"],
+            "pets": ["#PetsofInstagram", "#DogLife", "#CatLife", "#AnimalLover", "#FurryFriends", "#PetCareTips"],
+            "learning": ["#LearningJourney", "#EducationMatters", "#SkillDevelopment", "#GrowthMindset", "#KnowledgeIsPower"],
+            "business": ["#EntrepreneurMindset", "#BusinessStrategy", "#SmallBusinessOwner", "#MarketingTips", "#SuccessDriven", "#StartupLife"],
+            "garden": ["#GardenLife", "#HomeGarden", "#PlantParent", "#GreenThumb", "#NatureAtHome"],
+            "DIY": ["#DIYProjects", "#CraftingIdeas", "#Handmade", "#CreativeDIY", "#DoItYourself"],
+            "wellness": ["#WellnessJourney", "#Mindfulness", "#SelfCare", "#HealthyHabits", "#MentalHealthMatters"],
+            "sustainability": ["#SustainableLiving", "#EcoFriendly", "#GoGreen", "#ClimateAction", "#ZeroWasteLifestyle"],
+            "family": ["#FamilyTime", "#ParentingLife", "#MomLife", "#DadLife", "#KidsActivities", "#FamilyAdventures"],
+            "home": ["#HomeDecor", "#InteriorDesign", "#HomeSweetHome", "#OrganizationTips", "#HomeRenovation"],
+            "fitness": ["#FitnessGoals", "#WorkoutRoutine", "#HealthyLifestyle", "#GymMotivation"],
+            "health": ["#HealthyChoices", "#WellnessTips", "#NutritionGoals", "#MindBodySoul"],
+            "career": ["#CareerGoals", "#ProfessionalDevelopment", "#WorkLife", "#JobSearchTips"],
+            "friendship": ["#FriendshipGoals", "#BestFriends", "#GoodTimes", "#SquadGoals"],
+            "music": ["#MusicLover", "#NewMusic", "#MusicianLife", "#Songwriter"],
+            "photography": ["#PhotographyLovers", "#PhotoArt", "#VisualStorytelling", "#InstaPhotography"],
+            "fashionista": ["#FashionTrends", "#StyleDiaries", "#OutfitInspo", "#FashionistaLife"],
+            "mindfulness": ["#MindfulLiving", "#Meditation", "#InnerPeace", "#ZenVibes"]
+        };
+
+        const audienceSpecificHashtags = {
+            general: ["#InstaDaily", "#PhotoOfTheDay", "#GoodVibesOnly", "#LifeStyle", "#MomentsThatMatter", "#DailyInspiration"],
+            niche: ["#CommunityLove", "#NicheLife", "#PassionProject", "#DeepDive", "#ExpertInsights", "#IndustryLeader"],
+            friends: ["#FriendsAndFamily", "#CherishedMoments", "#MakingMemories", "#SquadGoals", "#BestiesForLife", "#GoodTimes"],
+            customers: ["#ShopNow", "#ClientLove", "#BusinessGrowth", "#ServiceBasedBusiness", "#SolutionProvider", "#CustomerSuccess", "#SupportSmallBusiness"],
+            professional: ["#ProfessionalDevelopment", "#CareerGrowth", "#IndustryInsights", "#Networking", "#ExpertTips", "#ThoughtLeadership"]
+        };
+
+        // --- Helper Functions ---
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function cleanAndCapitalizeHashtag(str) {
+            return '#' + str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase().replace(/\s/g, '');
+        }
+
+        // --- Main Caption Generation Function ---
+        function generateCaption() {
+            const imageSubject = document.getElementById('imageSubject').value.trim().toLowerCase();
+            const keywordsInput = document.getElementById('keywords').value.trim().toLowerCase();
+            const mood = document.getElementById('mood').value;
+            const callToAction = document.getElementById('callToAction').value;
+            const audience = document.getElementById('audience').value;
+            const length = document.getElementById('length').value;
+            const captionOutput = document.getElementById('captionOutput');
+
+            let subjectForCaption = imageSubject || "this moment";
+            let primaryKeywordForHashtags = imageSubject.split(' ')[0] || "post";
+            let userKeywords = keywordsInput.split(',').map(kw => kw.trim()).filter(kw => kw.length > 0);
+
+            // Prioritize user keywords for main subject if available
+            if (userKeywords.length > 0) {
+                subjectForCaption = getRandomElement(userKeywords);
+                primaryKeywordForHashtags = subjectForCaption.split(' ')[0];
+            } else if (imageSubject) {
+                primaryKeywordForHashtags = imageSubject.split(' ')[0];
+            }
+
+            // --- 1. Construct the Main Body of the Caption ---
+            let captionSentenceElements = []; // Array to hold individual sentence parts
+
+            // Mood-specific adjective and core concept for dynamic text
+            const moodAdj = getRandomElement(moodAdjectives[mood] || moodAdjectives.happy);
+            const coreConcept = getRandomElement(concepts[mood] || concepts.general);
+
+            // Sentence 1: Opening Hook
+            let openingSentence = getRandomElement(openingHooks)
+                                .replace(/\[SUBJECT_PHRASE\]/g, subjectForCaption)
+                                .replace(/\[ADJECTIVE\]/g, moodAdj)
+                                .replace(/\[MOOD_ADJECTIVE\]/g, moodAdj)
+                                .replace(/\[SUBJECT_NOUN\]/g, subjectForCaption.split(' ')[0]) // Use first word as noun
+                                .replace(/\[NOUN\]/g, subjectForCaption.split(' ')[0])
+                                .replace(/\[CONCEPT\]/g, coreConcept);
+            captionSentenceElements.push(capitalizeFirstLetter(openingSentence));
+
+            // Sentence 2: Reinforcing Statement (always included)
+            let reinforcingSentence = getRandomElement(reinforcingStatements[mood] || reinforcingStatements.happy)
+                                      .replace(/\[SUBJECT_PHRASE\]/g, subjectForCaption)
+                                      .replace(/\[SUBJECT_NOUN\]/g, subjectForCaption.split(' ')[0])
+                                      .replace(/\[ADJECTIVE\]/g, moodAdj)
+                                      .replace(/\[CONCEPT\]/g, coreConcept);
+            captionSentenceElements.push(reinforcingSentence);
+
+            // Add Transitional Phrase and optional detail for Medium/Long
+            if (length === 'medium' || length === 'long') {
+                let transPhrase = getRandomElement(transitionalPhrases)
+                                  .replace(/\[SUBJECT_NOUN\]/g, subjectForCaption.split(' ')[0])
+                                  .replace(/\[CONCEPT\]/g, coreConcept)
+                                  .replace(/\[MOOD_ADJECTIVE\]/g, moodAdj);
+                captionSentenceElements.push(transPhrase);
+
+                // Add a more specific detail/thought if keywords provided or long
+                if (userKeywords.length > 0 || length === 'long') {
+                    const specificDetail = `It's all about embracing the ${getRandomElement(userKeywords.length > 0 ? userKeywords : [moodAdj + ' details'])} here.`;
+                    captionSentenceElements.push(specificDetail);
+                }
+            }
+
+            // Add a General Closing Phrase for Long captions
+            if (length === 'long') {
+                captionSentenceElements.push(getRandomElement(generalClosingPhrases));
+            }
+
+            // Assemble the main caption text based on desired length
+            let finalCaptionBody = '';
+            if (length === 'short') {
+                finalCaptionBody = captionSentenceElements.slice(0, 1).join('. ') + ".";
+                if (captionSentenceElements.length > 1 && Math.random() > 0.5) { // Sometimes add a second short phrase
+                    finalCaptionBody += ` ${captionSentenceElements[1].split('.')[0].trim()}.`;
+                }
+            } else if (length === 'medium') {
+                finalCaptionBody = captionSentenceElements.slice(0, Math.min(3, captionSentenceElements.length)).join(' ');
+            } else { // long
+                finalCaptionBody = captionSentenceElements.join(' ');
+            }
+
+            // --- 2. Add Call to Action ---
+            let ctaText = getRandomElement(CTA_prompts[callToAction] || CTA_prompts.engage_comment);
+            ctaText = ctaText.replace(/\[KEYWORD_PHRASE\]/g, primaryKeywordForHashtags)
+                             .replace(/\[MAIN_KEYWORD\]/g, primaryKeywordForHashtags)
+                             .replace(/\[AUDIENCE_TYPE\]/g, audience.replace('_', ' ')); // Make audience type readable
+
+
+            // --- 3. Generate Emojis ---
+            let generatedEmojis = '';
+            const numEmojis = Math.floor(Math.random() * 4) + 3; // 3 to 6 emojis
+            const availableEmojis = moodEmojis[mood] || moodEmojis.happy;
+            for (let i = 0; i < numEmojis; i++) {
+                generatedEmojis += getRandomElement(availableEmojis);
+            }
+            // Shuffle them for more randomness
+            generatedEmojis = generatedEmojis.split('').sort(() => 0.5 - Math.random()).join('');
+
+
+            // --- 4. Generate Hashtags ---
+            let generatedHashtags = new Set();
+
+            // From image subject/keywords (more robust processing)
+            const subjectWords = imageSubject.split(/\s+/).filter(word => word.length > 2);
+            subjectWords.forEach(word => generatedHashtags.add(cleanAndCapitalizeHashtag(word)));
+            userKeywords.forEach(kw => generatedHashtags.add(cleanAndCapitalizeHashtag(kw)));
+
+            // From niche-specific mappings (if subject/keywords contain common terms)
+            for (const key in nicheKeywordsToHashtags) {
+                if (imageSubject.includes(key) || keywordsInput.includes(key) || userKeywords.some(kw => kw.includes(key))) {
+                    nicheKeywordsToHashtags[key].forEach(tag => generatedHashtags.add(tag));
+                }
+            }
+
+            // From audience
+            const audienceTags = audienceSpecificHashtags[audience] || audienceSpecificHashtags.general;
+            audienceTags.slice(0, Math.floor(Math.random() * 3) + 2).forEach(tag => generatedHashtags.add(tag)); // Add 2-4 audience tags
+
+            // General trending/popular tags (always good to have some)
+            const generalTags = ["#InstaVibes", "#DailyMotivation", "#ExplorePage", "#LifeGoals", "#Inspire", "#GoodVibes", "#CreativeContent", "#DigitalCreator", "#CommunityFirst", "#MakingMagic"];
+            generalTags.sort(() => 0.5 - Math.random()).slice(0, Math.floor(Math.random() * 4) + 2).forEach(tag => generatedHashtags.add(tag)); // 2-5 random general tags
+
+            let finalHashtags = Array.from(generatedHashtags).sort(() => 0.5 - Math.random()).slice(0, 20); // Limit to max 20 unique hashtags
+
+            // --- Final Output ---
+            let outputHTML = `
+                <p>${finalCaptionBody}</p>
+                <div class="emoji-line">${generatedEmojis}</div>
+                <div class="hashtags">${finalHashtags.join(' ')}</div>
+            `;
+
+            captionOutput.innerHTML = outputHTML;
+        }
+    </script>
+
+<script type='text/javascript' src='//chaindoorman.com/67/a1/99/67a19930c1d9f0fb5bb6d9f06597c8dd.js'></script>
+
+
+
+
+</body>
+</html>
